@@ -1,0 +1,16 @@
+#spring:
+#  datasource:
+#    driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+#    url: jdbc:sqlserver://192.168.246.128:1433;databaseName=Image;TrustServerCertificate=True
+#    username: sa
+#    password: P@ssw0rd
+#  jpa:
+#    show-sql: True
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+storage:
+  location: E:\Result File
