@@ -17,16 +17,16 @@ public class FileServerImp implements StoredFileService {
 
     private final Path rootLocation;
 
-    public FileServerImp(@Value("${storage.location}") String storageLocation) {
+    public FileServerImp(@Value("${path.location}") String storageLocation) {
         this.rootLocation = Paths.get(storageLocation);
     }
 
     @Override
     public void saveFileToFolder(MultipartFile multipartFile) throws Exception {
-        String filename = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
         if (multipartFile.isEmpty()) {
-            throw new Exception("Multipart File Is Empty " + filename);
+            throw new Exception("Multipart File Is Empty");
         }
+        String filename = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
         try (InputStream inputStream = multipartFile.getInputStream()) {
             String resultPath = String.valueOf(this.rootLocation.resolve(filename));
             System.out.println(resultPath);
