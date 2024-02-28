@@ -1,11 +1,13 @@
 package com.tpk.uploadfile.service;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -33,5 +35,18 @@ public class FileServerImp implements StoredFileService {
             Files.copy(inputStream, this.rootLocation.resolve(filename), StandardCopyOption.REPLACE_EXISTING);
         }
     }
-    
+
+    @Override
+    public Resource getFile(String filename) {
+        Path filePath = Paths.get(rootLocation.toUri()).resolve(filename).normalize();
+        try {
+            Resource resource = new org.springframework.core.io.UrlResource(filePath.toUri());
+            if (resource.exists() || resource.isReadable()){
+                return resource;
+            }
+            return resource;
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
