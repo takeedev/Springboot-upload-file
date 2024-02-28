@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.tpk</groupId>
-    <artifactId>uploadimage</artifactId>
+    <artifactId>uploadfile</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>uploadimage</name>
+    <name>uploadfile</name>
     <description>learinning</description>
     <properties>
         <java.version>17</java.version>

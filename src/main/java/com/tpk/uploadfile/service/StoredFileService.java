@@ -1,4 +1,4 @@
-package com.tpk.uploadimage.service;
+package com.tpk.uploadfile.service;
 
 import org.springframework.web.multipart.MultipartFile;
 

@@ -1,6 +1,6 @@
-package com.tpk.uploadimage.controller;
+package com.tpk.uploadfile.controller;
 
-import com.tpk.uploadimage.service.StoredFileService;
+import com.tpk.uploadfile.service.StoredFileService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 @AllArgsConstructor
 @RequestMapping(value = "/service")
-public class UploadImageController {
+public class UploadFileController {
 
     private final StoredFileService storedFileService;
 

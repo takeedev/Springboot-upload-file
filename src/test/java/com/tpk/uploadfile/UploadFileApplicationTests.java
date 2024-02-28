@@ -1,10 +1,10 @@
-package com.tpk.uploadimage;
+package com.tpk.uploadfile;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class UploadimageApplicationTests {
+class UploadFileApplicationTests {
 
 	@Test
 	void contextLoads() {

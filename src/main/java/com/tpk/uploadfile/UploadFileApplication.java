@@ -1,13 +1,13 @@
-package com.tpk.uploadimage;
+package com.tpk.uploadfile;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class UploadimageApplication {
+public class UploadFileApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(UploadimageApplication.class, args);
+		SpringApplication.run(UploadFileApplication.class, args);
 	}
 
 }
