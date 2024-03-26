@@ -23,7 +23,7 @@ public class UploadFileController {
     private final StoredFileService storedFileService;
 
     @PostMapping(value = "/upload/file")
-    public ResponseEntity fileUpload(@RequestParam("file") MultipartFile file) throws Exception {
+    public ResponseEntity<?> fileUpload(@RequestParam("file") MultipartFile file) throws Exception {
         storedFileService.saveFileToFolder(file);
         return ResponseEntity.ok().build();
     }
@@ -47,6 +47,12 @@ public class UploadFileController {
         return new ResponseEntity<>(new InputStreamResource(resource.getInputStream())
                 , headers
                 , HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/delete")
+    public ResponseEntity<?> deleteFile(@RequestBody String filename) {
+        boolean isDelete = storedFileService.deleteFile(filename);
+        return ResponseEntity.status(HttpStatus.OK).body(isDelete);
     }
 
     private static MediaType getMediaType(Resource resource) {

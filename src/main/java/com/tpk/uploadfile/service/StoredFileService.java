@@ -9,4 +9,5 @@ public interface StoredFileService {
 
     Resource getFile(String filename);
 
+    boolean deleteFile(String fileName);
 }
