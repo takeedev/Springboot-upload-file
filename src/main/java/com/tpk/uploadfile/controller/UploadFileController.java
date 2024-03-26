@@ -1,6 +1,7 @@
 package com.tpk.uploadfile.controller;
 
 import com.tpk.uploadfile.service.StoredFileService;
+import com.tpk.uploadfile.utils.UploadUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Objects;
 
 @Controller
 @AllArgsConstructor
@@ -21,6 +21,8 @@ import java.util.Objects;
 public class UploadFileController {
 
     private final StoredFileService storedFileService;
+
+    private final UploadUtils uploadUtils;
 
     @PostMapping(value = "/upload/file")
     public ResponseEntity<?> fileUpload(@RequestParam("file") MultipartFile file) throws Exception {
@@ -30,14 +32,11 @@ public class UploadFileController {
 
     @GetMapping(value = "/download/{filename:.+}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String filename) throws IOException {
-
         if (filename.isEmpty()) {
             throw new IOException("Filename is Empty");
         }
-
         Resource resource = storedFileService.getFile(filename);
-
-        MediaType mediaType = getMediaType(resource);
+        MediaType mediaType = uploadUtils.getMediaType(resource);
 
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"");
@@ -55,21 +54,5 @@ public class UploadFileController {
         return ResponseEntity.status(HttpStatus.OK).body(isDelete);
     }
 
-    private static MediaType getMediaType(Resource resource) {
-        String filename = Objects.requireNonNull(resource.getFilename()).toLowerCase();
-        MediaType mediaType = MediaType.APPLICATION_OCTET_STREAM;
-        if (filename.contains(".png")) {
-            mediaType = MediaType.IMAGE_PNG;
-        } else if (filename.contains(".jpeg")) {
-            mediaType = MediaType.IMAGE_JPEG;
-        } else if (filename.contains(".pdf")) {
-            mediaType = MediaType.APPLICATION_PDF;
-        } else if (filename.contains(".json")) {
-            mediaType = MediaType.APPLICATION_JSON;
-        } else if (filename.contains(".gif")) {
-            mediaType = MediaType.IMAGE_GIF;
-        }
-        return mediaType;
-    }
 
 }
