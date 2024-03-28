@@ -7,9 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -25,8 +23,9 @@ public class FileServerImp implements StoredFileService {
         this.rootLocation = Paths.get(storageLocation);
     }
 
+    @SneakyThrows
     @Override
-    public void saveFileToFolder(MultipartFile multipartFile) throws Exception {
+    public void saveFileToFolder(MultipartFile multipartFile){
         if (multipartFile.isEmpty()) {
             throw new Exception("Multipart File Is Empty");
         }
@@ -38,18 +37,15 @@ public class FileServerImp implements StoredFileService {
         }
     }
 
+    @SneakyThrows
     @Override
     public Resource getFile(String filename) {
         Path filePath = Paths.get(rootLocation.toUri()).resolve(filename).normalize();
-        try {
-            Resource resource = new org.springframework.core.io.UrlResource(filePath.toUri());
-            if (resource.exists() || resource.isReadable()) {
-                return resource;
-            }
-            return resource;
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
+        Resource resource = new org.springframework.core.io.UrlResource(filePath.toUri());
+        if (!resource.exists()) {
+            resource.isReadable();
         }
+        return resource;
     }
 
     @Override
