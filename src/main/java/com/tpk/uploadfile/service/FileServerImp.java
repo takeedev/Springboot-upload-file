@@ -31,8 +31,6 @@ public class FileServerImp implements StoredFileService {
         }
         String filename = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
         try (InputStream inputStream = multipartFile.getInputStream()) {
-            String resultPath = String.valueOf(this.rootLocation.resolve(filename));
-            System.out.println(resultPath);
             Files.copy(inputStream, this.rootLocation.resolve(filename), StandardCopyOption.REPLACE_EXISTING);
         }
     }
