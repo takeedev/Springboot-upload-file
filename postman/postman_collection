@@ -1,0 +1,152 @@
+{
+	"info": {
+		"_postman_id": "2baa7832-9cab-4a55-b00e-a19d2f47de95",
+		"name": "file",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8005632"
+	},
+	"item": [
+		{
+			"name": "upload-image",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/Users/USER/Downloads/logo-tpk-v2.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/service/upload/file",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"service",
+						"upload",
+						"file"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add-announcement",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "text",
+							"value": "รายละเอียด",
+							"type": "text"
+						},
+						{
+							"key": "images[0].imageMobile",
+							"type": "file",
+							"src": "postman-cloud:///1f02b5a5-ead4-44b0-bbde-c1cc106953e5"
+						},
+						{
+							"key": "images[0].imageTablet",
+							"type": "file",
+							"src": "/C:/Users/USER/Downloads/sdfsdfsdf.jpg"
+						},
+						{
+							"key": "images[0].imageDesktop",
+							"type": "file",
+							"src": "/C:/Users/USER/Downloads/logo.jpg"
+						},
+						{
+							"key": "images[1].imageMobile",
+							"type": "file",
+							"src": "/C:/Users/USER/Downloads/cheatsheet-intelij-idea-win-2.png"
+						},
+						{
+							"key": "images[1].imageTablet",
+							"type": "file",
+							"src": "/C:/Users/USER/Downloads/S__19103766.jpg"
+						},
+						{
+							"key": "images[1].imageDesktop",
+							"type": "file",
+							"src": "/C:/Users/USER/Downloads/logo-tpk-v2.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/service/api/announcements",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"service",
+						"api",
+						"announcements"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "search image all",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/service/download",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"service",
+						"download"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "search image get",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/service/download/แฟน.jpg",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"service",
+						"download",
+						"แฟน.jpg"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -4,10 +4,12 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StreamUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Base64;
 import java.util.Objects;
+import java.util.UUID;
 
 @Component
 public class UploadUtils {
@@ -37,4 +39,10 @@ public class UploadUtils {
         return "data:" + mimeType + ";base64," + base64;
     }
 
+    public String saveImage(MultipartFile file, String type) {
+        if (file == null || file.isEmpty()) return null;
+        String folder = "uploads/";
+        String filename = folder + file.getOriginalFilename();
+        return filename;
+    }
 }

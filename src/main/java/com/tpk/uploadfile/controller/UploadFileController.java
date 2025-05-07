@@ -2,6 +2,8 @@ package com.tpk.uploadfile.controller;
 
 import com.tpk.uploadfile.dto.ImageDto;
 import com.tpk.uploadfile.dto.ResponseBody;
+import com.tpk.uploadfile.dto.request.MultipartFileImageDto;
+import com.tpk.uploadfile.dto.request.RequestDto;
 import com.tpk.uploadfile.service.StoredFileService;
 import com.tpk.uploadfile.utils.UploadUtils;
 import lombok.AllArgsConstructor;
@@ -15,9 +17,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.swing.text.Style;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @AllArgsConstructor
@@ -50,6 +54,21 @@ public class UploadFileController {
         return new ResponseEntity<>(new InputStreamResource(resource.getInputStream())
                 , headers
                 , HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/api/announcements", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ResponseBody> createAnnouncement(@ModelAttribute RequestDto request) throws Exception {
+        for (int i = 0; i < request.getImages().size(); i++) {
+            MultipartFileImageDto imageSet = request.getImages().get(i);
+
+            String mobilePath = uploadUtils.saveImage(imageSet.getImageMobile(), "mobile");
+            String tabletPath = uploadUtils.saveImage(imageSet.getImageTablet(), "tablet");
+            String desktopPath = uploadUtils.saveImage(imageSet.getImageDesktop(), "desktop");
+            storedFileService.saveFileToFolder(imageSet.getImageMobile());
+            storedFileService.saveFileToFolder(imageSet.getImageTablet());
+            storedFileService.saveFileToFolder(imageSet.getImageDesktop());
+        }
+        return ResponseEntity.ok().body(null);
     }
 
     @GetMapping(value = "/download")
