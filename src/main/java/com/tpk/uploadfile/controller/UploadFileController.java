@@ -1,5 +1,7 @@
 package com.tpk.uploadfile.controller;
 
+import com.tpk.uploadfile.dto.ImageDto;
+import com.tpk.uploadfile.dto.ResponseBody;
 import com.tpk.uploadfile.service.StoredFileService;
 import com.tpk.uploadfile.utils.UploadUtils;
 import lombok.AllArgsConstructor;
@@ -10,10 +12,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.List;
 
 @Controller
 @AllArgsConstructor
@@ -48,11 +54,24 @@ public class UploadFileController {
                 , HttpStatus.OK);
     }
 
+    @GetMapping(value = "/download")
+    public ResponseEntity<ResponseBody> getImage() throws IOException {
+        Resource resource = storedFileService.getFile("sdf.png");
+        String image1 = uploadUtils.encodeImageToBase64(resource);
+        String image2 = uploadUtils.encodeImageToBase64(resource);
+        List<ImageDto> listImage = new ArrayList<>();
+        ImageDto imageDto = ImageDto.builder().imageA(image1).imageB(image2).build();
+        ImageDto imageDto2 = ImageDto.builder().imageA(image1).imageB(image2).build();
+        listImage.add(imageDto);
+        listImage.add(imageDto2);
+        ResponseBody responseBody = new ResponseBody("Test", listImage);
+        return ResponseEntity.ok().body(responseBody);
+    }
+
     @PostMapping(value = "/delete")
     public ResponseEntity<?> deleteFile(@RequestBody String filename) {
         boolean isDelete = storedFileService.deleteFile(filename);
         return ResponseEntity.status(HttpStatus.OK).body(isDelete);
     }
-
 
 }
