@@ -42,7 +42,6 @@ public class UploadUtils {
     public String saveImage(MultipartFile file, String type) {
         if (file == null || file.isEmpty()) return null;
         String folder = "uploads/";
-        String filename = folder + file.getOriginalFilename();
-        return filename;
+        return folder + file.getOriginalFilename();
     }
 }
